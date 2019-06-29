@@ -1,15 +1,17 @@
 package com.Springboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Springboot.services.UserServiceImpl;
+import com.Springboot.mapper.UserMapper;
+import com.Springboot.vo.User;
 
 @RestController
 public class UserContoller {
-	@Autowired
-	UserServiceImpl usersevice;
+
+	@Autowired UserMapper userMapper;
 
 	@RequestMapping(value="/login")
 	public String login(){
@@ -19,6 +21,14 @@ public class UserContoller {
 	@RequestMapping(value="/home")
 	public String home() {
 		return "home page";
+	}
+	
+	@RequestMapping("/test/{name}")
+	public User home(String name) {
+		System.out.println("---------------------------------------------");
+		System.out.println(name);
+		User user = userMapper.readUserInfo((name));          
+		return user;
 	}
 	
 	/*

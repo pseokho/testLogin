@@ -19,9 +19,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserServiceImpl usersevice;
 
-    @Autowired
-    DataSource dataSource;
-
 	//단, 사용자 데이터는 애플리케이션 실행 시점에 생성합니다.
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception{
@@ -31,31 +28,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.usersByUsernameQuery("select username, password, role form users where username=?");*/
 		//password encoding
 		PasswordEncoder encoder =PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		
-		int count = usersevice.getUserCount();
-		
-		System.out.println("user 수는 :"+count);
-		for(int i=0;i<count;i++) {
+		 auth.userDetailsService(usersevice).passwordEncoder(usersevice.passwordEncoder());
+		 
 
-			auth.inMemoryAuthentication().
-			withUser(usersevice.getTotalUserInfo().get(i).getUsername())
-			.password(encoder.encode(usersevice.getTotalUserInfo().get(i).getPassword()))
-			.roles("USER");
-			
-			System.out.print("withUser('"+usersevice.getTotalUserInfo().get(i).getUsername()+"')");
-			System.out.print(".password("+usersevice.getTotalUserInfo().get(i).getPassword()+")");
-			System.out.println(".roles("+usersevice.getTotalUserInfo().get(i).getRole()+")");
-		}
 		/*
+		 * int count = usersevice.getUserCount();
+		 * 
+		 * System.out.println("user 수는 :"+count); for(int i=0;i<count;i++) {
+		 * 
 		 * auth.inMemoryAuthentication().
-		 * withUser("user").password(encoder.encode("1234")).roles("USER");
+		 * withUser(usersevice.getTotalUserInfo().get(i).getUsername())
+		 * .password(encoder.encode(usersevice.getTotalUserInfo().get(i).getPassword()))
+		 * .roles("USER");
+		 * 
+		 * System.out.print("withUser('"+usersevice.getTotalUserInfo().get(i).
+		 * getUsername()+"')");
+		 * System.out.print(".password("+usersevice.getTotalUserInfo().get(i).
+		 * getPassword()+")");
+		 * System.out.println(encoder.encode(usersevice.getTotalUserInfo().get(i).
+		 * getPassword())); }
 		 */
 		
-		
-		/*
-		 * auth.inMemoryAuthentication().withUser("user")
-		 * .password("1234").roles("USER");
-		 */
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

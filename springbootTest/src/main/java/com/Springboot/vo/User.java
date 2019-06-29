@@ -1,11 +1,16 @@
 package com.Springboot.vo;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @brief 유져 테이블에 필드값과 매칭되는 값들 Vo선언. 기본적으로 NULL값은 비허용이다. username, password
@@ -15,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity // user 개체선언
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	private String username;
@@ -23,23 +28,53 @@ public class User {
 	@Column(nullable = false)
 	private String password; // 패스워드 필드
 
-	@Column(nullable = false)
-	private Boolean enable; // 로그인 횟수 초과로인한 정지 유저판단
-
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Role role; // 권한 관리
 
 	@Column(nullable = false)
 	private int errcount; // 로그인에러 횟수 추후에 로직 수정
+	@Column
+    private Boolean isAccountNonExpired =true;
+	@Column
+    private Boolean isAccountNonLocked = true;
+	@Column
+    private Boolean isCredentialsNonExpired=true;
+	@Column
+    private Boolean isEnabled=true;
+	
+	@Transient
+	 private Collection<? extends GrantedAuthority> authorities;
 
-	public void setEnable(Boolean enable) {
-		this.enable = enable;
-	}
-
+	 
+     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+         this.authorities = authorities;
+    }
 	public void setErrcount(int errcount) {
 		this.errcount = errcount;
 	}
+	
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setAccountNonExpired(boolean isAccountNonExpired) {
+		this.isAccountNonExpired = isAccountNonExpired;
+	}
+
+	public void setAccountNonLocked(boolean isAccountNonLocked) {
+		this.isAccountNonLocked = isAccountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
+		this.isCredentialsNonExpired = isCredentialsNonExpired;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+
 
 	public String getUsername() {
 		return username;
@@ -49,24 +84,33 @@ public class User {
 		return password;
 	}
 
-	public Boolean getEnable() {
-		return enable;
-	}
-
 	public int getErrcount() {
 		return errcount;
 	}
 
-	public Role getRole() {
-		return role;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+         return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+         return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+         return isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+         return isEnabled;
+    }
 
 
-
-	@Override
-	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", enable=" + enable + ", errcount=" + errcount
-				+ ", role=" + role + "]";
-	}
-
+	 @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+         return authorities;
+    }
 }

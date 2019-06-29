@@ -2,25 +2,28 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
- 
+
 <mapper namespace="com.Springboot.mapper.UserMapper">
- 
-    <select id="getUserCount" resultType="int">
-        SELECT
-            COUNT(*)
-        FROM USERS
-    </select>
-    
-     
-    <select id="getTotalUserInfo" resultType="com.Springboot.vo.User">
-        SELECT username,password,role
-        FROM USERS
-    </select>
-    
-    <select id="getUserInfo" resultType="com.Springboot.vo.User">
-        SELECT *
-        FROM USERS
-        WHERE username = #{username}
-    </select>
+
+	<select id="readUserCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM USERS
+	</select>
+
+
+	<select id="readTotalUserInfo"
+		resultType="com.Springboot.vo.User">
+		SELECT username,password,role
+		FROM USERS
+	</select>
+
+	<select id="readUserInfo" resultType="com.Springboot.vo.User">
+		SELECT * FROM users WHERE username = #{username}
+	</select>
+	<select id="readAuthority" parameterType="String"
+		resultType="String">
+		SELECT authority_name FROM authority WHERE username = #{username}
+	</select>
 
 </mapper>
