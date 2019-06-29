@@ -18,22 +18,6 @@ import com.Springboot.vo.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-	/*
-	 * @Autowired UserMapper userMapper; private PasswordEncoder passwordEncoder =
-	 * new BCryptPasswordEncoder();
-	 * 
-	 */
-	/*
-	 * @Override public int getUserCount() throws Exception { // TODO Auto-generated
-	 * method stub int uCount = userdMapper.getUserCount(); return uCount; }
-	 * 
-	 * @Override public List<User> getTotalUserInfo() throws Exception { // TODO
-	 * Auto-generated method stub return userdMapper.getTotalUserInfo(); }
-	 * 
-	 * @Override public User getUserInfo(String username) throws Exception { // TODO
-	 * Auto-generated method stub System.out.println("qerqerqerqereqrqereqrqer : " +
-	 * username); User user = userdMapper.getUserInfo(username); return user; }
-	 */
 
 	@Autowired
 	UserMapper userMapper;
