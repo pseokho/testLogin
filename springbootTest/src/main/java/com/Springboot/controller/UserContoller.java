@@ -1,10 +1,10 @@
 package com.Springboot.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,20 +21,19 @@ public class UserContoller {
 		return "login page";
 		
 	}
-	@RequestMapping(value="/home")
-	public String home() {
-		return "home page";
-	}
+
 	
+	/* 이것도 언젠간 써먹으니까 준비해두자 http://localhost:8800/test/kakao?username=kakao*/
 	@RequestMapping("/test/{name}")
-	public User home(String name) {
+	public User home(HttpServletRequest request) {
+		String name =request.getParameter("username");
 		System.out.println("---------------------------------------------");
 		System.out.println(name);
 		User user = userMapper.readUserInfo((name));          
 		return user;
 	}
 	
-	@RequestMapping(value="/")
+	@RequestMapping(value="/home")
 	public ModelAndView loginPage(Authentication auth) {
 		ModelAndView model = new ModelAndView();
 		if(auth !=null && auth.getName()!=null) {
