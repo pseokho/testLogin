@@ -1,15 +1,11 @@
 package com.Springboot.vo;
 
-import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.springframework.security.core.GrantedAuthority;
 
 /**
  * @brief 유져 테이블에 필드값과 매칭되는 값들 Vo선언. 기본적으로 NULL값은 비허용이다. username, password
