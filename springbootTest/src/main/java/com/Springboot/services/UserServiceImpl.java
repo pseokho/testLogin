@@ -1,27 +1,41 @@
 package com.Springboot.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.Springboot.domain.User;
-import com.Springboot.repository.UserRepository;
+import com.Springboot.mapper.UserMapper;
+import com.Springboot.vo.User;
 
 @Service
-public class UserServiceImpl implements UserService{
-	private final UserRepository userRepository;
+public class UserServiceImpl implements UserMapper {
 	
-	//DI주입
-	@Autowired
-	public UserServiceImpl(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-	
+	@Resource(name = "com.Springboot.mapper.UserMapper")
+	UserMapper userdMapper;
 	@Override
-	public User getUserByUsername(String username) {
+	public int getUserCount() throws Exception {
 		// TODO Auto-generated method stub
-		return userRepository.findByUsername(username);
+		int uCount = userdMapper.getUserCount();
+		return uCount;
 	}
 
+	@Override
+	public List<User> getTotalUserInfo() throws Exception {
+		// TODO Auto-generated method stub
+		 List<User>  users = userdMapper.getTotalUserInfo();
+		return users;
+	}
 
-
+	@Override
+	public User getUserInfo(String username) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("qerqerqerqereqrqereqrqer : "  + username);
+		User user = userdMapper.getUserInfo(username);
+		return user;
+	}
+	
 }
