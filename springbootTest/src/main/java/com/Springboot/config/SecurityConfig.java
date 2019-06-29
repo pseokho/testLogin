@@ -1,19 +1,33 @@
 package com.Springboot.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+/**
+ * @brief userDetailsService를 통해서 옙실행시 DB에 존재하는 user아이들만 인증되도록한다
+ * @author p
+ *
+ */
 
 @EnableWebSecurity
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private UserDetailsService userDetailsSerivce ;
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+		auth.userDetailsService(userDetailsSerivce);
 		//auth.inMemoryAuthentication().withUser("test").password("test");
-		auth.inMemoryAuthentication().withUser("test").password("{noop}1111").roles("USER");
+		//auth.inMemoryAuthentication().withUser("test").password("{noop}1111").roles("USER");
 	}
 	 @Override
 	    protected void configure(HttpSecurity http) throws Exception {

@@ -1,6 +1,6 @@
 package com.Springboot.services;
 
-import com.Springboot.vo.User;
+import com.Springboot.domain.User;
 
 /**
  * 

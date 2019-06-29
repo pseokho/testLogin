@@ -3,8 +3,8 @@ package com.Springboot.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Springboot.domain.User;
 import com.Springboot.repository.UserRepository;
-import com.Springboot.vo.User;
 
 @Service
 public class UserServiceImpl implements UserService{
