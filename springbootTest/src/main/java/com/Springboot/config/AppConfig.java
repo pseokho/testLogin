@@ -8,8 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-/*
- * resource setting 
+/**
+ * @brief 서버세팅
+ * @author p
+ *
  */
 @Configuration
 @EnableWebMvc
