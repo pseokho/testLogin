@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserMapper {
 	@Override
 	public List<User> getTotalUserInfo() throws Exception {
 		// TODO Auto-generated method stub
-		 List<User>  users = userdMapper.getTotalUserInfo();
-		return users;
+		return  userdMapper.getTotalUserInfo();
 	}
 
 	@Override
