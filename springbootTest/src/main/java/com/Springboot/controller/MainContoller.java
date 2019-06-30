@@ -1,18 +1,23 @@
 package com.Springboot.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Springboot.mapper.UserMapper;
 import com.Springboot.vo.User;
 
-@RestController
-public class UserContoller {
+import net.minidev.json.JSONObject;
+
+@Controller
+public class MainContoller {
 
 	@Autowired UserMapper userMapper;
 
@@ -22,16 +27,18 @@ public class UserContoller {
 		
 	}
 
-	
+
 	/* 이것도 언젠간 써먹으니까 준비해두자 http://localhost:8800/test/kakao?username=kakao*/
-	@RequestMapping("/test/{name}")
-	public User home(HttpServletRequest request) {
-		String name =request.getParameter("username");
-		System.out.println("---------------------------------------------");
-		System.out.println(name);
-		User user = userMapper.readUserInfo((name));          
-		return user;
+	@RequestMapping(value="/serach"  ,method =  RequestMethod.GET)
+	public @ResponseBody JSONObject serach(@RequestParam Map<String, Object> pamap) {
+		JSONObject result= new JSONObject();
+		String keyword =pamap.get("keyword").toString();
+		System.out.println(keyword);
+				
+		result.put("state", "SUCCESS");
+		return result;
 	}
+	
 	
 	@RequestMapping(value="/home")
 	public ModelAndView loginPage(Authentication auth) {
