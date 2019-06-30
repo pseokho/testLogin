@@ -20,9 +20,12 @@
 		<!-- 프로젝트 기본 인코딩은 UTF-8 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		
 	</properties>
 
 	<dependencies>
+
 		<!-- 기본 bootSetting -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -52,6 +55,20 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Jackson -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.9.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>  
+			<version>2.9.8</version>
+		</dependency>
+		
 		<!-- 아이디 기억, 검증 로직 등등 로그인 외에도 다른 기능들이 추가적으로 있는 로그인 화면을 만드는 게 목표 -->
   		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -74,6 +91,14 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+		<!-- SERVLET -->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.1.0</version>
+		    <scope>provided</scope>
+		</dependency>
 
         <!--MyBatis -->
         <dependency>
@@ -93,6 +118,13 @@
             <artifactId>mybatis</artifactId>
             <version>3.4.2</version>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
+		<dependency>
+		    <groupId>com.jayway.jsonpath</groupId>
+		    <artifactId>json-path</artifactId>
+		    <version>2.4.0</version>
+		</dependency>
+
 
 
 		<dependency>

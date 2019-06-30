@@ -6,8 +6,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>키워드로 장소검색하고 목록으로 표출하기</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>Login Demo - Kakao JavaScript SDK</title>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+</head>
+<body>
+ <div class="map_wrap">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+    <div id="menu_wrap" class="bg_white">
+        <div class="option">
+            <div>
+                <form onsubmit="searchPlaces(); return false;">키워드 : 
+                	<input type="text" value="카카오방크" id="keyword" size="15"> 
+                    <button type="submit">검색하기</button> 
+                </form>
+            </div>
+        </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
+    </div>
+</div>
+
+
+<!-- 
 <style>
 .map_wrap, .map_wrap * {
 	margin: 0;
@@ -215,7 +241,6 @@
 			<div id="pagination"></div>
 		</div>
 	</div>
-
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>
 	<script>
@@ -440,6 +465,6 @@
 				el.removeChild(el.lastChild);
 			}
 		}
-	</script>
+	</script> -->
 </body>
 </html>
