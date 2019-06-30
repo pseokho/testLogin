@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Springboot.mapper.UserMapper;
-import com.Springboot.vo.User;
+import com.Springboot.rest.servcie.RestfulService;
 
 import net.minidev.json.JSONObject;
 
@@ -20,7 +20,7 @@ import net.minidev.json.JSONObject;
 public class MainContoller {
 
 	@Autowired UserMapper userMapper;
-
+	@Autowired RestfulService restfulColler;
 	@RequestMapping(value="/login")
 	public String login(){
 		return "login page";
@@ -30,11 +30,12 @@ public class MainContoller {
 
 	/* 이것도 언젠간 써먹으니까 준비해두자 http://localhost:8800/test/kakao?username=kakao*/
 	@RequestMapping(value="/serach"  ,method =  RequestMethod.GET)
-	public @ResponseBody JSONObject serach(@RequestParam Map<String, Object> pamap) {
+	public @ResponseBody JSONObject serach(@RequestParam Map<String, Object> param) {
 		JSONObject result= new JSONObject();
-		String keyword =pamap.get("keyword").toString();
+		String keyword =param.get("keyword").toString();
 		System.out.println(keyword);
 				
+		restfulColler.restfulApiKkakao(keyword);
 		result.put("state", "SUCCESS");
 		return result;
 	}
