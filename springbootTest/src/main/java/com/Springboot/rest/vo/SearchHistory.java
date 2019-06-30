@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity // user 개체선언
-@Table(name = "serch")
+@Table(name = "serchHistory")
 @SequenceGenerator(
         name="USER_SEQ_GEN", //시퀀스 제너레이터 이름
         sequenceName="USER_SEQ", //시퀀스 이름
@@ -21,7 +21,12 @@ import javax.persistence.TemporalType;
         allocationSize=1 //메모리를 통해 할당할 범위 사이즈
         )
 
-public class Search {
+/**
+ * @brief table= serchHistory 필드 = username :유저명 ,keyWrod= 검색어 ,serachTime: 검색일시 
+ * @author p
+ *
+ */
+public class SearchHistory {
 
 	@Id
     @GeneratedValue(
