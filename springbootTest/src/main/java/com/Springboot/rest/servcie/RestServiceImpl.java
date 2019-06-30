@@ -14,36 +14,29 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RestServiceImpl implements RestfulService{
-
+public class RestServiceImpl implements RestfulService {
 
 	@Override
-	public Map<String, Object> restfulApiKkakao(String keyword) {
-		Map<String, Object>     rtnResult  = new HashMap<String, Object>();
-		System.out.println("restful test 들오옴");
-		
+	public String restfulApiKkakao(String keyword) {
+		String rtnResult = null; 
 		try {
 			rtnResult = getRestFulApiKakaoSerach(keyword);
-		} catch (ParseException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch (ParseException | IOException e) {	
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
 		return rtnResult;
 	}
-	
+
 	/**
 	 * 
 	 * @param keyword : 사용자가 검색한 키워드
 	 * @return 리턴코드(rtnStateCode), json 데이터 형식
-	 * @throws ParseException 
+	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public Map<String, Object> getRestFulApiKakaoSerach(String keyword) throws ParseException, IOException {
-		Map<String, Object>     aipResult  = new HashMap<String, Object>();
+	public String getRestFulApiKakaoSerach(String keyword) throws ParseException, IOException {
 		
-		int resStateCode = 0;
-		
+		String jsonData = null;
 		final String USER_AGENT = "KakaoAK 1c34ad52f343baa8e023b821aa14f5a6";
 	    String GET_URL = "https://dapi.kakao.com/v2/local/search/keyword.json?query=";    
 	    try {
@@ -56,26 +49,20 @@ public class RestServiceImpl implements RestfulService{
 	        //agent 정보 설정
 	        httpGet.addHeader("Authorization", USER_AGENT);
 	        httpGet.addHeader("Content-type", "application/json");
-	
-	 
+	        
 	        //get 요청
 	        CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
 	        
 	        System.out.println("GET Response Status");
 	        System.out.println(httpResponse.getStatusLine().getStatusCode());
-	        resStateCode=httpResponse.getStatusLine().getStatusCode();
-	        String json = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+	        jsonData = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
 	        
-	        aipResult.put("stateCode", resStateCode);
-	        aipResult.put("json", json);
-	        
-	        System.out.println(json);
+	        httpClient.close();
 	    }catch (ClientProtocolException e) {
-	    	aipResult.put("stateCode", resStateCode);
+	    	e.printStackTrace();
 		}
-		return aipResult;
+		return jsonData;
 
     }
-
 
 }
