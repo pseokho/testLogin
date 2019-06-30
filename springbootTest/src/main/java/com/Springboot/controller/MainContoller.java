@@ -32,11 +32,13 @@ public class MainContoller {
 	@RequestMapping(value="/serach"  ,method =  RequestMethod.GET)
 	public @ResponseBody JSONObject serach(@RequestParam Map<String, Object> param) {
 		JSONObject result= new JSONObject();
-		String keyword =param.get("keyword").toString();
+		String keyword =param.get("keyword").toString(); 
 		System.out.println(keyword);
 				
-		restfulColler.restfulApiKkakao(keyword);
-		result.put("state", "SUCCESS");
+		result.put("result",restfulColler.restfulApiKkakao(keyword)); 
+		result.put("status","SUCCESS");
+	
+		System.out.println("결과값은 :"+result);
 		return result;
 	}
 	
