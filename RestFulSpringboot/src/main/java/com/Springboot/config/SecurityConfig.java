@@ -1,5 +1,7 @@
 package com.Springboot.config;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.writers.frameoptions.WhiteListedAllowFromStrategy;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 import com.Springboot.services.UserServiceImpl;
 
@@ -31,13 +35,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-	    http
-				.authorizeRequests()
-				.antMatchers("/home/**") .authenticated()					 
-	            .antMatchers("/**")
-	            .permitAll()
-	    		.and()
-	    		.httpBasic();
+		/*
+		 * http .authorizeRequests() .antMatchers("/home/**") .authenticated()
+		 * .antMatchers("/**") .permitAll() .and() .httpBasic();
+		 */
+        http
+        .authorizeRequests()
+            .antMatchers(
+                    "/h2-console/**"
+            ).permitAll()
+            .anyRequest().authenticated()
+        .and()
+        .csrf()
+            .ignoringAntMatchers("/h2-console/**")
+        .and()
+        .headers()
+            .addHeaderWriter(
+                new XFrameOptionsHeaderWriter(
+                    new WhiteListedAllowFromStrategy(Arrays.asList("localhost"))    // 여기!
+                )
+            )
+        .and()
+        .httpBasic();
 	}
 
 }

@@ -5,8 +5,9 @@ INSERT INTO users(username, password, errcount)  VALUES('pyun' , '$2a$10$FjmvYhP
 
 
 insert into authority(username, authority_name) values ('kakao', 'USER');
---insert into authority(username, authority_name) values ('pyun' , 'USER');
+insert into authority(username, authority_name) values ('pyun' , 'USER');
 insert into authority(username, authority_name) values ('admin', 'USER');
 insert into authority(username, authority_name) values ('user' , 'USER');
 
 
+insert into hist_search(username,keyword) values('kakao','kakaobank');

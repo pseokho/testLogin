@@ -76,17 +76,6 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- Databases HSQL = IN DB 사용을위해 선언 -->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- jsp 사용을 위해 -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
 		<!-- SERVLET -->
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
@@ -115,24 +104,38 @@
 			<version>3.4.2</version>
 		</dependency>
 		
-		<!-- json 사용을위해 이게 string 형식을 바로 파싱할수있게해줌 -->
-		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20180813</version>
-		</dependency> 
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.4</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--  아래는 필수 -->
+		<!-- json 사용을위해 이게 string 형식을 바로 파싱할수있게해줌 -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20180813</version>
+		</dependency> 
+		<!-- Databases h2database = IN DB 사용을위해 선언 -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		</dependency>
+		<!-- jsp 사용을 위해 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		
+		<!--  restful 연동을위해 http client를 사용했다 -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.9</version>
+		</dependency>
+
+		
 	</dependencies>
 
 	<build>
