@@ -3,15 +3,21 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.Springboot.mapper.UserMapper">
+<mapper namespace="com.Springboot.mapper.SearchHistMapper">
 
-<!-- 
-	<select id="readTotalUserInfo"
-		resultType="com.Springboot.vo.User">
+
+<!-- 	<select id="readUserCount" resultType="com.Springboot.vo.HistSearch">
+			select * from hist_search
+			where rownum between 1 and 2
+
+	</select>
+ -->
+
+	<select id="readTotalUserInfo" resultType="com.Springboot.vo.User">
 		SELECT username,password,role
 		FROM USERS
 	</select>
- -->
+
 	<select id="readUserInfo" resultType="com.Springboot.vo.User">
 		SELECT * FROM users WHERE username = #{username}
 	</select>

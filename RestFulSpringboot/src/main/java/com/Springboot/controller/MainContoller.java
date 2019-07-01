@@ -14,17 +14,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.Springboot.mapper.SearchHistMapper;
 import com.Springboot.mapper.UserMapper;
 import com.Springboot.rest.servcie.RestfulService;
-import com.Springboot.vo.HistSearch;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
+/**
+ * 실제 서비스가 처리되도록 Model 역활
+ * @author p
+ *
+ */
 @Controller
 public class MainContoller {
 
+	
+	//user 데이터 관련 mapper
 	@Autowired UserMapper userMapper;
-	@Autowired RestfulService restfulColler;
+	//serach 관련 mapper
+	@Autowired SearchHistMapper searchHistMapper;
+	//restFul연동 Controller
+	@Autowired RestfulService restfulController;
 	@RequestMapping(value="/login")
 	public String login(){
 
@@ -36,9 +45,15 @@ public class MainContoller {
 	@RequestMapping(value="/serach" , produces = "application/text; charset=utf8" ,method =  RequestMethod.GET)
 	public @ResponseBody String serach(@RequestParam Map<String, Object> param) throws ParseException, JsonProcessingException, org.apache.tomcat.util.json.ParseException {
 
-		JSONObject json = new JSONObject(restfulColler.restfulApiKkakao(param));
+		JSONObject json = new JSONObject(restfulController.restfulApiKkakao(param));
 		JSONArray jsonArray = new  JSONArray(json.get("documents").toString());
 
+		// 검색 완료시  Keyword가 Null 이아닌이상 검색 기록을 남겨야된다.
+		String username = param.get("useranme").toString();
+		String keyword  = param.get("keywrod").toString();
+		System.out.println("username : " + username +" keyworld : "+ keyword);
+		//restfulController.insertSearchHist();
+		
 		return json.toString();
 	}
 	

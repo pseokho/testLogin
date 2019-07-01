@@ -50,10 +50,12 @@
 </head>
 	
 <script type="text/javascript">
-
-var listSize =10;
-var pageNum  =1;
+var listSize = 10;
+var pageNum  = 1;
 function serachList()	{
+
+	var username = ${pageContext.request.userPrincipal.name} ;
+	alert(username);
 	$.ajax({	
 		url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
 		data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
