@@ -50,57 +50,67 @@
 </head>
 	
 <script type="text/javascript">
-	$(document).ready(function() {
-		//검색 기능
+function drawMap (xPosition , yPosition){
 
-		$(function() {
-			$(".search").on("click", function() {
-				$.ajax({
-					url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-				    data: {keyword : $('#keyword').val()},  	                        // HTTP 요청과 함께 서버로 보낼 데이터
-				    method: "GET",                                     // HTTP 요청 방식(GET, POST)
-				    async: false,
-				    //dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
-				    contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+	console.log("xPosition : "+ xPosition);
+	console.log("yPosition : "+ yPosition);
+	
+}
+$(document).ready(function() {
+	
+	$(".search").on("click", function() {
+		$.ajax({
+			url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+			data: {keyword : $('#keyword').val()}, // HTTP 요청과 함께 서버로 보낼 데이터
+			method: "GET",                                     // HTTP 요청 방식(GET, POST)
+			//async: true,	//동기/비동기 방식 기본값 true
+			//dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+			})
+			.done(function(result) {	
+				//alert("요청 성공");
+				var item = "";
+				var obj = result
+				var pasobj=JSON.parse(obj);
+				$("#listItem").empty();
+				$.each(pasobj, function(key,value) {
+					item += "<tr>";
+					// value.x;  value.y; 지도값에 사용
+					//가게이름
+					item += "<td>";
+					item += value.place_name;
+					item += "</td>";
+					//지번
+					item += "<td>";
+					item += value.address_name;
+					item += "</td>";
+					//신주소
+					item += "<td>";
+					item += value.road_address_name;
+					item += "</td>";
+					//전화번호
+					item += "<td>";
+					item += value.phone;
+					item += "</td>";
+					item += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
+					item += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
+					item += "</tr>";
+					})
+					$('#serchList').append(item);
+				
+					$('#serchList').html(item);
 
-				})
-				.done(function(result) {
-					//alert("요청 성공");
-					var obj = result
-					var pasobj=JSON.parse(obj);
-					$.each(pasobj, function(key,value) {
-						console.log(value);
-						   var item = "";
-				            item += "<tr onclick>";
-				            // value.x;  value.y; 지도값에 사용
-				              //가게이름
-				              item += "<td>";
-				              item += value.place_name;
-				              item += "</td>";
-
-				              //지번
-				              item += "<td>";
-				              item += value.address_name;
-				              item += "</td>";
-				              //신주소
-				              item += "<td>";
-				              item += value.road_address_name;
-				              item += "</td>";
-				              //전화번호
-				              item += "<td>";
-				              item += value.phone;
-				              item += "</td>";   
-				         item += "</tr>";
-				         $('#placesList').append(item);
-					});
+					$('#serchList').find('tr').click(function(){
+						var xPosition = $(this).find('.x').val();
+						var yPosition = $(this).find('.y').val();
+						drawMap(xPosition,yPosition);
+			       });
 				})
 				.fail(function() {
 					alert("요청 실패");
 				})
-			});
-		});
-
-	});
+    });	
+});
 </script>
 <body>
 	<div class="map_wrap">
@@ -122,10 +132,11 @@
 			<ul class ="placesList" id="placesList"></ul>
 			<div id="pagination"></div>
 		</div> --%>
-		<ul class ="placesList" id="placesList"></ul>
-		<table id ="listItem">
-			<tr><td></td></tr>
-		</table>
+		<ul class ="placesList" id="placesList">	
+			<table id ="serchList">
+			</table>
+		</ul>
+
 	</div>
 </body>
 
