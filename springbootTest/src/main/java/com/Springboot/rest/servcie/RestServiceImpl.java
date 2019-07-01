@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class RestServiceImpl implements RestfulService {
 
 	@Override
-	public String restfulApiKkakao(String keyword) {
+	public String restfulApiKkakao(Map<String, Object> param) {
 		String rtnResult = null; 
 		try {
-			rtnResult = getRestFulApiKakaoSerach(keyword);
+			rtnResult = getRestFulApiKakaoSerach(param);
 		} catch (ParseException | IOException e) {	
 			e.printStackTrace();
 		}
@@ -29,20 +29,27 @@ public class RestServiceImpl implements RestfulService {
 
 	/**
 	 * 
-	 * @param keyword : 사용자가 검색한 키워드
-	 * @return 리턴코드(rtnStateCode), json 데이터 형식
+	 * @param param : 사용자가 검색한 키워드
+	 * @return json 데이터 형식
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public String getRestFulApiKakaoSerach(String keyword) throws ParseException, IOException {
+	public String getRestFulApiKakaoSerach(Map<String, Object> param) throws ParseException, IOException {
 		
 		String jsonData = null;
+		String keyWord  = null;
+		String listSize= null;
+		String pageNum= null;
 		final String USER_AGENT = "KakaoAK 1c34ad52f343baa8e023b821aa14f5a6";
 	    String GET_URL = "https://dapi.kakao.com/v2/local/search/keyword.json?query=";    
 	    try {
-		      //http client 생성
+
 	        CloseableHttpClient httpClient = HttpClients.createDefault();
-	        GET_URL=GET_URL+keyword;
+	        GET_URL=GET_URL+keyWord; //검색을 원하는 질의어
+	        GET_URL=GET_URL+"&size="+listSize; //한 페이지에 보여질 문서의 개수
+	        GET_URL=GET_URL+"&page="+pageNum; //결과 페이지 번호
+	        
+	        System.out.println("GET_URL : " + GET_URL);
 	        //get 메서드와 URL 설정
 	        HttpGet httpGet = new HttpGet(GET_URL);
 	 
@@ -63,6 +70,9 @@ public class RestServiceImpl implements RestfulService {
 		}
 		return jsonData;
 
-    }
+	}
+
+	
+	
 
 }

@@ -51,21 +51,28 @@
 	
 <script type="text/javascript">
 
+var listSize =10;
+var pageNum  =2;
 function serachList()	{
-	$.ajax({
+	$.ajax({	
 		url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-		data: {keyword : $('#keyword').val()}, // HTTP 요청과 함께 서버로 보낼 데이터
+		data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
 		method: "GET",                                     // HTTP 요청 방식(GET, POST)
 		//async: true,	//동기/비동기 방식 기본값 true
 		//dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8"
 		})
 		.done(function(result) {	
-			//alert("요청 성공");
 			var item = "";
-			var obj = result
-			var pasobj=JSON.parse(obj);
+			var pasobj=JSON.parse(result); 
 			$("#listItem").empty();
+
+			var totalCount = pasobj.meta.total_count;
+			var maxPage = ((totalCount-1)/listSize)+1; 
+			//( 총 갯수 - 1 / 한페이지에 보여질 글 갯수 ) + 1
+			
+			console.log("총글 갯수        : " + totalCount);
+			console.log("총 페이지 갯수  : " + maxPage);
 
 			$.each(pasobj.documents, function(key,value) {					 			
 				//가게이름
@@ -99,11 +106,6 @@ function serachList()	{
 					var yPosition = $(this).find('.y').val();
 					drawMap(xPosition, yPosition);
 		       });
-
-			$.each(pasobj.meta, function(key,value) {
-				console.log("key : "+ key + " value : "+value );
-	
-				})
 				 
 			})
 			.fail(function() {
@@ -120,22 +122,6 @@ $(document).ready(function() {
 });
 </script>
 <body>
-
-<!-- <div class="map_wrap">
-		<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div> 지도
-		<div id="menu_wrap" class="bg_white">
-			<div class="option">
-				<input type="text" value="" id="keyword" size="15">
-				<button class="search" type="submit">검색하기</button>
-			</div>
-		</div>
-
-			<ul id="placesList">
-				<table id="serchList">
-				</table>
-			</ul>
-</div>
- -->
 
 <div class="map_wrap">
 <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -185,41 +171,6 @@ $(document).ready(function() {
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 	}
 </script>
-
-<!-- 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>
-	<script>
-		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-		var infowindow = new kakao.maps.InfoWindow({
-			zIndex : 1
-		});
-
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		//기본 위치에대한 설정
-		mapOption = {
-			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 3
-		// 지도의 확대 레벨
-		};
-
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-
-		// 장소 검색 객체를 생성합니다
-		var ps = new kakao.maps.services.Places();
-
-		// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-		function placesSearchCB(y,  x) {
-			alert ("지도 제성정 요청");
-				// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-				// LatLngBounds 객체에 좌표를 추가합니다
-			bounds.extend(new kakao.maps.LatLng(y, x));
-			map.setBounds(bounds);
-			
-		}
-
-	</script> -->
-</body>
 </body>
 
 
