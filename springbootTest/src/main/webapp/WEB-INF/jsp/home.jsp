@@ -65,14 +65,14 @@ function serachList()	{
 		.done(function(result) {	
 			var item = "";
 			var pasobj=JSON.parse(result); 
-			$("#listItem").empty();
-
+			$("#serchList").empty();
+			
 			var totalCount = pasobj.meta.total_count;
 			var maxPage = ((totalCount-1)/listSize)+1;
-				
+			 var el ;
 			$.each(pasobj.documents, function(key,value) {					 			
 				//가게이름
-				item += "<tr>";
+/* 				item += "<tr>";
 				item += "<td>";
 				item += value.place_name;
 				item += "</td>";
@@ -90,14 +90,30 @@ function serachList()	{
 				item += "</td>";
 				item += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
 				item += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
-				item += "</tr>"; 
+				item += "</tr>";  */
+				
+
+			    el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
+				itemStr += ' <span>' + value.road_address_name + '</span>' + ' <span class="jibun gray">' +  value.address_name  + '</span>';
+			    itemStr += ' <span>' + value.address_name  + '</span>';                 
+			    itemStr += ' <span class="tel">' + value.phone  + '</span>' + '</div>';   
+			    itemStr += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
+				itemStr += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
+
+			    el.innerHTML = itemStr;
+			    el.className = 'item';
+			    
+			    console.log(el);
+			    item+=el;
+
+ 				$('#serchList').append(el);
 			})
-			
- 				$('#serchList').append(item);
+			/* 
+ 				$('#serchList').append(el); */
 			
 				//$('#serchList').html(item);
 
-				$('#serchList').find('tr').click(function(){
+				$('#serchList').find('li').click(function(){
 					var xPosition = $(this).find('.x').val();
 					var yPosition = $(this).find('.y').val();
 					drawMap(xPosition, yPosition);
@@ -160,18 +176,26 @@ $(document).ready(function() {
 		mapOption = {
 				center : new kakao.maps.LatLng(yPosition, xPosition), // 지도의 중심좌표
 				level : 3
-			// 지도의 확대 레벨
+				// 지도의 확대 레벨
 			};
 
 		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(yPosition, xPosition);
+
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition
+		});
+
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+
 	}
 	
 </script>
 
-
-
-
 </body>
-
 
 </html>

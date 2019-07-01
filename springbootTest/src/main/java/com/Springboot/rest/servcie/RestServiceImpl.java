@@ -44,6 +44,9 @@ public class RestServiceImpl implements RestfulService {
 	    String GET_URL = "https://dapi.kakao.com/v2/local/search/keyword.json?query=";    
 	    try {
 
+	    	keyWord   = param.get("keyword").toString();
+	    	listSize  = param.get("listSize").toString();
+	    	pageNum   = param.get("pageNum").toString();
 	        CloseableHttpClient httpClient = HttpClients.createDefault();
 	        GET_URL=GET_URL+keyWord; //검색을 원하는 질의어
 	        GET_URL=GET_URL+"&size="+listSize; //한 페이지에 보여질 문서의 개수
