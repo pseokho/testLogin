@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,22 +28,21 @@ public class HistSearch {
 
     @Column(name = "search_Time") 
     private String search_Time;
-
+    
+    @Transient
+    private int searchCount; //추후에 검색어별 건수 체크를위해
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getKeyword() {
         return keyword;
     }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    
+    public int getSearchCount() {
+        return searchCount;
     }
+
 
     public interface HistSearchRepository extends JpaRepository<HistSearch, Long> {
     }

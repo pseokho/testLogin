@@ -1,6 +1,7 @@
 package com.Springboot.controller;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -47,18 +48,15 @@ public class MainContoller {
 
         JSONObject json = new JSONObject(restfulController.restfulApiKkakao(param));
         JSONArray jsonArray = new JSONArray(json.get("documents").toString());
-
-        // 검색 완료시 Keyword가 Null 이아닌이상 검색 기록을 남겨야된다.
         String username = auth.getName();
         String keyword = param.get("keyword").toString();
-        System.out.println(username);
+        //검색 기록을 남긴다.
         searchController.insertSearchHist(username, keyword);
+        //인기목록 검색해온다
+        List<HistSearch> popularSearch  = searchController.popularSearches();
+        //개인검색목록을 검색해온다
+        List<HistSearch> userSearchHist = searchController.userSearchHist(username);
 
-        System.out.println( " 제대로 들어갓나 ?");
-        int aa =searchController.histCount();
-        System.out.println(aa);
-        HistSearch aaa= searchController.LastHist();
-        System.out.println(aaa.toString());
         return json.toString();
     }
 

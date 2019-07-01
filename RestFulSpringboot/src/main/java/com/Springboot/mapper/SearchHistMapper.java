@@ -19,5 +19,11 @@ public interface SearchHistMapper {
 	public List<HistSearch> popularSearches();
 	//INSERT INTO SearchHistory(username, keyWrod ,serachTime)  VALUES('' , '',sysdate');
 
+    /**
+     * 히스트 목록 표시
+     * @param username 
+     * @return 유져에 최근검색목록 리턴
+     */
+    public List<HistSearch> userSearchHist(String username);
 
 }

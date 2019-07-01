@@ -18,8 +18,9 @@ public interface SearchHistSerivce {
 	 */
 	public List<HistSearch> popularSearches();
 
-	//TODO
-    public int histCount();
-
-    public HistSearch LastHist();
+	/**
+	 * 유저에 마지막 검색어 목록
+	 * @return 내 검색 히스토리 리턴
+	 */
+    public List<HistSearch> userSearchHist(String username);
 }

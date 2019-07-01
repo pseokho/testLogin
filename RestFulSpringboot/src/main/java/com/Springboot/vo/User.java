@@ -22,97 +22,95 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 public class User implements UserDetails {
 
-	@Id
-	private String username;
+    @Id
+    private String username;
 
-	@Column(nullable = false)
-	private String password; // 패스워드 필드
+    @Column(nullable = false)
+    private String password; // 패스워드 필드
 
-
-	@Column(nullable = false)
-	private int errcount; // 로그인에러 횟수 추후에 로직 수정
-	@Column
-    private Boolean isAccountNonExpired =true;
-	@Column
+    @Column(nullable = false)
+    private int errcount; // 로그인에러 횟수 추후에 로직 수정
+    @Column
+    private Boolean isAccountNonExpired = true;
+    @Column
     private Boolean isAccountNonLocked = true;
-	@Column
-    private Boolean isCredentialsNonExpired=true;
-	@Column
-    private Boolean isEnabled=true;
-	
-	@Transient
-	 private Collection<? extends GrantedAuthority> authorities;
+    @Column
+    private Boolean isCredentialsNonExpired = true;
+    @Column
+    private Boolean isEnabled = true;
 
-	 
-     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-         this.authorities = authorities;
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
-	public void setErrcount(int errcount) {
-		this.errcount = errcount;
-	}
-	
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public void setAccountNonExpired(boolean isAccountNonExpired) {
-		this.isAccountNonExpired = isAccountNonExpired;
-	}
 
-	public void setAccountNonLocked(boolean isAccountNonLocked) {
-		this.isAccountNonLocked = isAccountNonLocked;
-	}
+    public void setErrcount(int errcount) {
+        this.errcount = errcount;
+    }
 
-	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
-		this.isCredentialsNonExpired = isCredentialsNonExpired;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
+    public void setAccountNonExpired(boolean isAccountNonExpired) {
+        this.isAccountNonExpired = isAccountNonExpired;
+    }
 
+    public void setAccountNonLocked(boolean isAccountNonLocked) {
+        this.isAccountNonLocked = isAccountNonLocked;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
 
-	public int getErrcount() {
-		return errcount;
-	}
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getErrcount() {
+        return errcount;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
-         return isAccountNonExpired;
+        return isAccountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-         return isAccountNonLocked;
+        return isAccountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-         return isCredentialsNonExpired;
+        return isCredentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-         return isEnabled;
+        return isEnabled;
     }
 
-
-	 @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-         return authorities;
+        return authorities;
     }
-	 public interface UserRepository extends JpaRepository<User, Long> {
-	 }
+
+    public interface UserRepository extends JpaRepository<User, Long> {
+    }
 }
