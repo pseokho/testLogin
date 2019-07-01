@@ -50,72 +50,72 @@
 </head>
 	
 <script type="text/javascript">
-function drawMap (xPosition , yPosition){
 
-	console.log("xPosition : "+ xPosition);
-	console.log("yPosition : "+ yPosition);
+function serachList()	{
+	$.ajax({
+		url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+		data: {keyword : $('#keyword').val()}, // HTTP 요청과 함께 서버로 보낼 데이터
+		method: "GET",                                     // HTTP 요청 방식(GET, POST)
+		//async: true,	//동기/비동기 방식 기본값 true
+		//dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+		})
+		.done(function(result) {	
+			//alert("요청 성공");
+			var item = "";
+			var obj = result
+			var pasobj=JSON.parse(obj);
+			$("#listItem").empty();
+
+			$.each(pasobj.documents, function(key,value) {					 			
+				//가게이름
+				item += "<tr>";
+				item += "<td>";
+				item += value.place_name;
+				item += "</td>";
+				//지번
+				item += "<td>";
+				item += value.address_name;
+				item += "</td>";
+				//신주소d
+				item += "<td>";
+				item += value.road_address_name;
+				item += "</td>";
+				//전화번호
+				item += "<td>";
+				item += value.phone;
+				item += "</td>";
+				item += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
+				item += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
+				item += "</tr>"; 
+			})
+			
+ 				$('#serchList').append(item);
+			
+				$('#serchList').html(item);
+
+				$('#serchList').find('tr').click(function(){
+					var xPosition = $(this).find('.x').val();
+					var yPosition = $(this).find('.y').val();
+					drawMap(xPosition, yPosition);
+		       });
+
+			$.each(pasobj.meta, function(key,value) {
+				console.log("key : "+ key + " value : "+value );
+	
+				})
+				 
+			})
+			.fail(function() {
+				alert("요청 실패");
+			})
 	
 }
+
 $(document).ready(function() {
 	
 	$(".search").on("click", function() {
-		$.ajax({
-			url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-			data: {keyword : $('#keyword').val()}, // HTTP 요청과 함께 서버로 보낼 데이터
-			method: "GET",                                     // HTTP 요청 방식(GET, POST)
-			//async: true,	//동기/비동기 방식 기본값 true
-			//dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-			})
-			.done(function(result) {	
-				//alert("요청 성공");
-				var item = "";
-				var obj = result
-				var pasobj=JSON.parse(obj);
-				$("#listItem").empty();
-
-				$.each(pasobj.documents, function(key,value) {					 			
-					//가게이름
-					item += "<tr>";
-					item += "<td>";
-					item += value.place_name;
-					item += "</td>";
-					//지번
-					item += "<td>";
-					item += value.address_name;
-					item += "</td>";
-					//신주소
-					item += "<td>";
-					item += value.road_address_name;
-					item += "</td>";
-					//전화번호
-					item += "<td>";
-					item += value.phone;
-					item += "</td>";
-					item += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
-					item += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
-					item += "</tr>"; 
-				})
-				
-	 				$('#serchList').append(item);
-				
-					$('#serchList').html(item);
-
-					$('#serchList').find('tr').click(function(){
-						var xPosition = $(this).find('.x').val();
-						var yPosition = $(this).find('.y').val();
-						placesSearchCB(yPosition,xPosition);
-			       });
-
-				$.each(pasobj.meta, function(key,value) {
-					console.log("key : "+ key + " value : "+value );
-		
-					})
-					 
-				})
-				.fail(function() {
-					alert("요청 실패");
-				})
+		serachList();
     });	
 });
 </script>
@@ -152,14 +152,39 @@ $(document).ready(function() {
         </ul>
         <div id="pagination"></div>
 	</div>
-		<!-- 		
-	<ul id="placesList">
-		<table id="serchList">
- 		</table>
-	</ul> -->
+
 
 </div>
 
+<script type="text/javascript"	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>
+<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	//기본 위치에대한 설정
+	mapOption = {
+		center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+		level : 3
+	// 지도의 확대 레벨
+	};
+	
+
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+	
+	
+	function drawMap (xPosition , yPosition){
+
+		console.log("xPosition : "+ xPosition);
+		console.log("yPosition : "+ yPosition);
+		
+		mapOption = {
+				center : new kakao.maps.LatLng(yPosition, xPosition), // 지도의 중심좌표
+				level : 3
+			// 지도의 확대 레벨
+			};
+
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+	}
+</script>
 
 <!-- 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>
