@@ -52,7 +52,7 @@
 <script type="text/javascript">
 
 var listSize =10;
-var pageNum  =2;
+var pageNum  =1;
 function serachList()	{
 	$.ajax({	
 		url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
@@ -68,12 +68,8 @@ function serachList()	{
 			$("#listItem").empty();
 
 			var totalCount = pasobj.meta.total_count;
-			var maxPage = ((totalCount-1)/listSize)+1; 
-			//( 총 갯수 - 1 / 한페이지에 보여질 글 갯수 ) + 1
-			
-			console.log("총글 갯수        : " + totalCount);
-			console.log("총 페이지 갯수  : " + maxPage);
-
+			var maxPage = ((totalCount-1)/listSize)+1;
+				
 			$.each(pasobj.documents, function(key,value) {					 			
 				//가게이름
 				item += "<tr>";
@@ -99,7 +95,7 @@ function serachList()	{
 			
  				$('#serchList').append(item);
 			
-				$('#serchList').html(item);
+				//$('#serchList').html(item);
 
 				$('#serchList').find('tr').click(function(){
 					var xPosition = $(this).find('.x').val();
@@ -107,6 +103,8 @@ function serachList()	{
 					drawMap(xPosition, yPosition);
 		       });
 				 
+				
+				
 			})
 			.fail(function() {
 				alert("요청 실패");
@@ -158,9 +156,6 @@ $(document).ready(function() {
 	
 	
 	function drawMap (xPosition , yPosition){
-
-		console.log("xPosition : "+ xPosition);
-		console.log("yPosition : "+ yPosition);
 		
 		mapOption = {
 				center : new kakao.maps.LatLng(yPosition, xPosition), // 지도의 중심좌표
@@ -170,7 +165,12 @@ $(document).ready(function() {
 
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 	}
+	
 </script>
+
+
+
+
 </body>
 
 
