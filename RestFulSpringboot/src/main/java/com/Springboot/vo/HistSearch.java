@@ -1,6 +1,7 @@
 package com.Springboot.vo;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,8 +25,8 @@ public class HistSearch {
     @Column(nullable = false)
     private String keyword;
 
-    @Column
-    private Timestamp createDate; // insert 시 시간 자동 저장
+    @Column(name = "search_Time") 
+    private String search_Time;
 
     public String getUsername() {
         return username;
@@ -48,7 +49,7 @@ public class HistSearch {
 
     @Override
     public String toString() {
-        return "HistSearch [id=" + id + ", username=" + username + ", keyword=" + keyword + ", createDate=" + createDate
+        return "HistSearch [id=" + id + ", username=" + username + ", keyword=" + keyword + ", search_Time=" + search_Time
                 + "]";
     }
 

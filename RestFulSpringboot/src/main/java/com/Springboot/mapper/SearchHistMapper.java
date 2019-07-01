@@ -10,7 +10,7 @@ public interface SearchHistMapper {
 	 * 사용자가 검색을 하면 정보를 입력한다.
 	 * @param  사용자이름 / 키워드
 	 */
-	public void  insertSearchHist (String username, String keyword); 
+	public void  insertSearchHist (String username, String keyword,String search_Time); 
 	
 	/**
 	 * 인기 검색어 검색
@@ -19,10 +19,5 @@ public interface SearchHistMapper {
 	public List<HistSearch> popularSearches();
 	//INSERT INTO SearchHistory(username, keyWrod ,serachTime)  VALUES('' , '',sysdate');
 
-	//TODO
-    public int histCount();
-
-    //TODO
-    public HistSearch LastHist();
 
 }

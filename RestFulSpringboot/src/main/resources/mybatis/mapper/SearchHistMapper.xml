@@ -11,12 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="LastHist" resultType="com.Springboot.vo.HistSearch">
-
-	SELECT *
-		from (
+		SELECT *
+		FROM (
 			SELECT * 
 			FROM hist_search
-			order by  create_date desc
+			order by  search_Time desc
 		)WHERE <![CDATA[  ROWNUM <= 1 ]]> 
 			
 	</select>
@@ -25,8 +24,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	<insert id="insertSearchHist" parameterType="String">
-		insert into hist_search(username,keyword, create_date)
-		values(#{username},#{keyword}, now())
+		insert into hist_search(
+			username,keyword, search_Time
+		)
+		values(
+			#{username},#{keyword}, #{search_Time} 
+		)
 		
 	</insert>
 

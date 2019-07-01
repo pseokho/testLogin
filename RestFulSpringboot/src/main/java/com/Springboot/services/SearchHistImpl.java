@@ -15,7 +15,10 @@ public class SearchHistImpl implements SearchHistSerivce{
     SearchHistMapper searchHistMapper;
     @Override
     public void insertSearchHist(String username, String keyword) {
-        searchHistMapper.insertSearchHist(username, keyword);
+
+        String search_Time   = new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
+
+        searchHistMapper.insertSearchHist(username, keyword, search_Time);
         
     }
 
