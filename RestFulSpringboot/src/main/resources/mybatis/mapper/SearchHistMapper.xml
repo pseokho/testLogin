@@ -5,25 +5,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.Springboot.mapper.SearchHistMapper">
 
-
-<!-- 	<select id="readUserCount" resultType="com.Springboot.vo.HistSearch">
-			select * from hist_search
-			where rownum between 1 and 2
-
+	<select id="histCount" resultType="int">
+		SELECT COUNT(*)
+		FROM hist_search
 	</select>
- -->
+	
+	<select id="LastHist" resultType="com.Springboot.vo.HistSearch">
 
-	<select id="readTotalUserInfo" resultType="com.Springboot.vo.User">
-		SELECT username,password,role
-		FROM USERS
+	SELECT *
+		from (
+			SELECT * 
+			FROM hist_search
+			order by  create_date desc
+		)WHERE <![CDATA[  ROWNUM <= 1 ]]> 
+			
 	</select>
 
-	<select id="readUserInfo" resultType="com.Springboot.vo.User">
-		SELECT * FROM users WHERE username = #{username}
-	</select>
-	<select id="readAuthority" parameterType="String"
-		resultType="String">
-		SELECT authority_name FROM authority WHERE username = #{username}
-	</select>
+
+
+	
+	<insert id="insertSearchHist" parameterType="String">
+		insert into hist_search(username,keyword, create_date)
+		values(#{username},#{keyword}, now())
+		
+	</insert>
+
+
 
 </mapper>

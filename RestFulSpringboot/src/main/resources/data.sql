@@ -10,4 +10,4 @@ insert into authority(username, authority_name) values ('admin', 'USER');
 insert into authority(username, authority_name) values ('user' , 'USER');
 
 
-insert into hist_search(username,keyword) values('kakao','kakaobank');
+--insert into hist_search(username,keyword) values('kakao','kakaobank');

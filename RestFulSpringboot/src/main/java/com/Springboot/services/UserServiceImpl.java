@@ -19,44 +19,44 @@ import com.Springboot.vo.User;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	UserMapper userMapper;
+    @Autowired
+    UserMapper userMapper;
 
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = userMapper.readUserInfo(username);
+        User user = userMapper.readUserInfo(username);
 
-		user.setAuthorities(getAuthorities(username));
+        user.setAuthorities(getAuthorities(username));
 
-		System.out.println("이게문제같은데");
+        System.out.println("이게문제같은데");
 
-		return user;
-	}
+        return user;
+    }
 
-	public Collection<GrantedAuthority> getAuthorities(String username) {
-		List<String> string_authorities = userMapper.readAuthority(username);
+    public Collection<GrantedAuthority> getAuthorities(String username) {
+        List<String> string_authorities = userMapper.readAuthority(username);
 
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		for (String authority : string_authorities) {
-			authorities.add(new SimpleGrantedAuthority(authority));
-		}
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        for (String authority : string_authorities) {
+            authorities.add(new SimpleGrantedAuthority(authority));
+        }
 
-		return authorities;
+        return authorities;
 
-	}
+    }
 
-	@Override
-	public User readUser(String username) {
-		User user = userMapper.readUserInfo(username);
-		return user;
-	}
+    @Override
+    public User readUserInfo(String username) {
+        User user = userMapper.readUserInfo(username);
+        return user;
+    }
 
-	@Override
-	public PasswordEncoder passwordEncoder() {
-		return this.passwordEncoder;
-	}
+    @Override
+    public PasswordEncoder passwordEncoder() {
+        return this.passwordEncoder;
+    }
 
 }

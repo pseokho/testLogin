@@ -54,8 +54,6 @@ var listSize = 10;
 var pageNum  = 1;
 function serachList()	{
 
-	var username = ${pageContext.request.userPrincipal.name} ;
-	alert(username);
 	$.ajax({	
 		url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
 		data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
@@ -72,29 +70,7 @@ function serachList()	{
 			var totalCount = pasobj.meta.total_count;
 			var maxPage = ((totalCount-1)/listSize)+1;
 			 var el ;
-			$.each(pasobj.documents, function(key,value) {					 			
-				//가게이름
-/* 				item += "<tr>";
-				item += "<td>";
-				item += value.place_name;
-				item += "</td>";
-				//지번
-				item += "<td>";
-				item += value.address_name;
-				item += "</td>";
-				//신주소d
-				item += "<td>";
-				item += value.road_address_name;
-				item += "</td>";
-				//전화번호
-				item += "<td>";
-				item += value.phone;
-				item += "</td>";
-				item += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
-				item += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
-				item += "</tr>";  */
-				
-
+			$.each(pasobj.documents, function(key,value) {					 				
 			    el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
 				itemStr += ' <span>' + value.road_address_name + '</span>' + ' <span class="jibun gray">' +  value.address_name  + '</span>';
 			    itemStr += ' <span>' + value.address_name  + '</span>';                 
@@ -104,16 +80,10 @@ function serachList()	{
 
 			    el.innerHTML = itemStr;
 			    el.className = 'item';
-			    
-			    console.log(el);
 			    item+=el;
 
  				$('#serchList').append(el);
 			})
-			/* 
- 				$('#serchList').append(el); */
-			
-				//$('#serchList').html(item);
 
 				$('#serchList').find('li').click(function(){
 					var xPosition = $(this).find('.x').val();
@@ -133,6 +103,7 @@ function serachList()	{
 $(document).ready(function() {
 	
 	$(".search").on("click", function() {
+
 		serachList();
     });	
 });
@@ -141,9 +112,10 @@ $(document).ready(function() {
 
 <div class="map_wrap">
 <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-	${pageContext.request.userPrincipal.name } 님 안녕하세요
+	
     <div id="menu_wrap" class="bg_white">
 		<div class="option">
+			<lable>${username}</lable>
 		    <input type="text" value="" id="keyword" size="15">
 			<button class="search" type="submit">검색하기</button>
 		</div>
