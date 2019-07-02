@@ -33,14 +33,6 @@ public class MainContoller {
     @Autowired
     RestfulService restfulController;
 
-    @RequestMapping(value = "/login")
-    public String login() {
-
-        return "";
-
-    }
-    
-    
     @RequestMapping(value = "/home/popularSearchesHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String popularSearchesHist(){
         

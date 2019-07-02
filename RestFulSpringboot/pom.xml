@@ -35,26 +35,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- security 관련 lib -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>5.1.2.RELEASE</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.1.2.RELEASE</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>5.1.2.RELEASE</version>
-		</dependency>
-
-
 
 		<!-- 아래는 필수 -->
 		<!-- json 사용을위해 이게 string 형식을 바로 파싱할수있게해줌 -->
