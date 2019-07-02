@@ -65,8 +65,12 @@ function serachList()	{
             var pasobj=JSON.parse(result); 
             $("#placesList").empty();
 
+            console.log(pasobj.documents);
              var el ;
-             $.each(pasobj.documents, function(key,value) {					 				
+             $.each(pasobj.documents, function(key,value) {
+                if(key ==1){
+                    drawMap(value.x, value.y);
+                 }
                 el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
                 itemStr += ' <span>' + value.road_address_name + '</span>' + ' <span class="jibun gray">' +  value.address_name  + '</span>';
                 itemStr += ' <span>' + value.address_name  + '</span>';
