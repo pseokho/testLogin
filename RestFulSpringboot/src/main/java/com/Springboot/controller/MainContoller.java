@@ -40,6 +40,16 @@ public class MainContoller {
 
     }
     
+    
+    @RequestMapping(value = "/home/popularSearchesHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+    public @ResponseBody String popularSearchesHist(){
+        
+        JSONObject json = new JSONObject();
+        
+        json.put("data", searchController.popularSearches());
+        
+        return json.toString();
+    }
     @RequestMapping(value = "/home/userSearchHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String userSearchHist(Authentication auth){
         

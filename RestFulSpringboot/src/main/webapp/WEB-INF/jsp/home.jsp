@@ -105,22 +105,74 @@ function userSearchHistList()   {
 
         var item = "";
         var pasobj=JSON.parse(result); 
-
+        item += "<label> 내 검색 히스토리 </label>"
+        item += "<table border ='1px'>";
+        item += "<tr>";
+        item += "<td> 검색어 </td>";
+        item += "<td> 검색일시 </td>";
+        item += "</tr>";
         console.log(pasobj );
         $.each(pasobj.data, function(key,value) {
+            item += "<tr>";
+            item += "<td> ";
+            item += value.KEYWORD;
+            item += "</td>";
+            //지번
+            item += "<td> ";
+            item += value.SEARCH_TIME;
+            item += "</td>";
 
-            
-            /* el= document.createElement('li'), itemStr =+  ' <h5> 검색어  : ' + value.KEYWORD ;
-            itemStr += ' 검색일시 :' + value.SEARCH_TIME+"</h5>" ;
+            item += "</tr>";
 
-            el.innerHTML = itemStr;
-            el.className = 'item';
-            item+=el;
-         
-
-            $('#searchHistList').append(el); 
-             */
         })
+        item+="</table>";
+        $('#searchHistList').append(item); 
+        
+
+     })
+     .fail(function() {
+         alert("요청 실패");
+     }) 
+}
+function popularSearchesList()   {
+    $.ajax({   
+        url: "home/popularSearchesHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        method: "GET",  // HTTP 요청 방식(GET, POST)
+        //async: true,  //동기/비동기 방식 기본값 true
+        //dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+      })
+    .done(function(result) {
+        $("#searchHistList").empty();
+
+        var item = "";
+        var pasobj=JSON.parse(result); 
+
+        console.log(pasobj.data);
+
+        item += "<label> 인기 키워드 목록 </label>"
+        item += "<table border ='1px'>";
+        item += "<tr>";
+        item += "<td> 검색어 </td>";
+        item += "<td> 횟수 </td>";
+        item += "</tr>";
+        console.log(pasobj );
+        $.each(pasobj.data, function(key,value) {
+            item += "<tr>";
+            item += "<td> ";
+            item += value.KEYWORD;
+            item += "</td>";
+            //지번
+            item += "<td>";
+            item += value.SEARCHCOUNT;
+            item += "</td>";
+
+            item += "</tr>";
+
+        })
+        item+="</table>";
+        $('#searchHistList').append(item); 
+        
 
      })
      .fail(function() {
@@ -144,7 +196,7 @@ $(document).ready(function() {
 });
 </script>
 <body>
-<div style='display:inline;min-width:1400px;'>
+<div style='display:inline;min-width:130px;'>
     <div class="map_wrap" style='display:inline;float:left;width:1000px'>
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
@@ -162,19 +214,17 @@ $(document).ready(function() {
     </div>
 <!--display:inline  :  기본값으로, 요소를 inline 요서처럼 표기 : 앞뒤로 줄바꿈 되지 않음.
     float:left : 왼쪽부터 배치 -->
-    <div id ="serarchHist" style="display:inline;float:left;width:400px">
+    <div id ="serarchHist" style="display:inline;float:left;width:300px">
          <div id="hist_wrap">
             <div class="option">
                 <button class="userSearchHist" type="submit" style="display:inline;width: 75px;">내 검색 목록</button>
                 <button class="popularSearches" type="submit" style="display:inline;width: 100px;">인기 키워드 목록</button>
             </div>
         <hr>
-        <ul id="searchHistList">
+        <ul id="searchHistList" style="padding: 0px;">
         </ul>
         </div>
     </div>
-
-
 
 
 <script type="text/javascript"	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>

@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         
     </insert>
 	
-    <select id="userSearchHist" resultType="Map">
+    <select id="userSearchHist" parameterType="String" resultType="Map">
         SELECT keyword , search_Time
         FROM hist_search
         WHERE username = #{username}

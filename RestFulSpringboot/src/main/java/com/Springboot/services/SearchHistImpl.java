@@ -22,10 +22,8 @@ public class SearchHistImpl implements SearchHistSerivce{
     }
 
     @Override
-    public List<HistSearch> popularSearches() {
-        List<HistSearch>  rtnPopluarSearches= searchHistMapper.popularSearches();
-
-        return rtnPopluarSearches;
+    public List<Map<String,Object>> popularSearches() {
+        return searchHistMapper.popularSearches();
     }
 
     public List<Map<String,Object>> userSearchHist(String username){
