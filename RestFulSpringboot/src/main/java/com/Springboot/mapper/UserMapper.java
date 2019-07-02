@@ -20,4 +20,6 @@ public interface UserMapper {
 	 */
 	public List<String> readAuthority(String username);
 
+	public void createUsers(String username ,String password);
+	public void createUserAuthority(String username);
 }

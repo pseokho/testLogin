@@ -12,5 +12,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="String">
 		SELECT authority_name FROM authority WHERE username = #{username}
 	</select>
+      
+    <insert id="createUsers" parameterType="String">
+        insert into users(
+            username, password
+        )
+        values(
+            #{username},#{password} 
+        )
+   </insert>
 
+      
+    <insert id="createUserAuthority" parameterType="String">
+        insert into authority(
+            username, authority_name
+        )
+        values(
+            #{username},'USER' 
+        )
+   </insert>
 </mapper>

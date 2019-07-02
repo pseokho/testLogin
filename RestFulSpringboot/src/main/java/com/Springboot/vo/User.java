@@ -28,8 +28,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password; // 패스워드 필드
 
-    @Column(nullable = false)
-    private int errcount; // 로그인에러 횟수 추후에 로직 수정
     @Column
     private Boolean isAccountNonExpired = true;
     @Column
@@ -44,10 +42,6 @@ public class User implements UserDetails {
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
-    }
-
-    public void setErrcount(int errcount) {
-        this.errcount = errcount;
     }
 
     public void setUsername(String username) {
@@ -82,10 +76,6 @@ public class User implements UserDetails {
         return password;
     }
 
-    public int getErrcount() {
-        return errcount;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
@@ -113,4 +103,13 @@ public class User implements UserDetails {
 
     public interface UserRepository extends JpaRepository<User, Long> {
     }
+
+    @Override
+    public String toString() {
+        return "User [username=" + username + ", password=" + password + ", isAccountNonExpired=" + isAccountNonExpired
+                + ", isAccountNonLocked=" + isAccountNonLocked + ", isCredentialsNonExpired=" + isCredentialsNonExpired
+                + ", isEnabled=" + isEnabled + ", authorities=" + authorities + "]";
+    }
+    
+    
 }

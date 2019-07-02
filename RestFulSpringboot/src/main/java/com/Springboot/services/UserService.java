@@ -20,4 +20,12 @@ public interface UserService extends UserDetailsService {
     */
     public User readUserInfo(String username);
     public PasswordEncoder passwordEncoder();
+
+    /**
+     * 실행시 유저를 생성하기위한.
+     * @param username
+     * @param password 단방향 암호화가 된 비밀번호
+     */
+    public void createUsers(String username ,String password);
+    public void createUserAuthority(String username);
 }

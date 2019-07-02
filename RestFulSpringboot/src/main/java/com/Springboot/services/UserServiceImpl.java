@@ -26,13 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userMapper.readUserInfo(username);
-
         user.setAuthorities(getAuthorities(username));
-
         System.out.println("이게문제같은데");
-
         return user;
     }
 
@@ -57,6 +53,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public PasswordEncoder passwordEncoder() {
         return this.passwordEncoder;
+    }
+
+    @Override
+    public void createUsers(String username, String password) {
+        userMapper.createUsers(username, password);
+    }
+
+    @Override
+    public void createUserAuthority(String username) {
+        userMapper.createUserAuthority(username);
+        
     }
 
 }
