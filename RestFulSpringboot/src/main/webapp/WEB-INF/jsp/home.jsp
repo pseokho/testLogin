@@ -54,120 +54,105 @@ var listSize = 10;
 var pageNum  = 1;
 function serachList()	{
 
-	$.ajax({	
-		url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-		data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
-		method: "GET",                                     // HTTP 요청 방식(GET, POST)
-		//async: true,	//동기/비동기 방식 기본값 true
-		//dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-		})
-		.done(function(result) {	
-			var item = "";
-			var pasobj=JSON.parse(result); 
-			$("#serchList").empty();
-			
-			var totalCount = pasobj.meta.total_count;
-			var maxPage = ((totalCount-1)/listSize)+1;
-			 var el ;
-			$.each(pasobj.documents, function(key,value) {					 				
-			    el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
-				itemStr += ' <span>' + value.road_address_name + '</span>' + ' <span class="jibun gray">' +  value.address_name  + '</span>';
-			    itemStr += ' <span>' + value.address_name  + '</span>';                 
-			    itemStr += ' <span class="tel">' + value.phone  + '</span>' + '</div>';   
-			    itemStr += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
-				itemStr += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
+    $.ajax({	
+            url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+            data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
+            method: "GET",  // HTTP 요청 방식(GET, POST)
+            //async: true,	//동기/비동기 방식 기본값 true
+            //dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+          })
+        .done(function(result) {	
+            var item = "";
+            var pasobj=JSON.parse(result); 
+            $("#placesList").empty();
 
-			    el.innerHTML = itemStr;
-			    el.className = 'item';
-			    item+=el;
+            var totalCount = pasobj.meta.total_count;
+            var maxPage = ((totalCount-1)/listSize)+1;
+             var el ;
+             $.each(pasobj.documents, function(key,value) {					 				
+                el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
+                itemStr += ' <span>' + value.road_address_name + '</span>' + ' <span class="jibun gray">' +  value.address_name  + '</span>';
+                itemStr += ' <span>' + value.address_name  + '</span>';
+                itemStr += ' <span class="tel">' + value.phone  + '</span>' + '</div>';
+                itemStr += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
+                itemStr += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
 
- 				$('#serchList').append(el);
-			})
+                el.innerHTML = itemStr;
+                el.className = 'item';
+                item+=el;
 
-				$('#serchList').find('li').click(function(){
-					var xPosition = $(this).find('.x').val();
-					var yPosition = $(this).find('.y').val();
-					drawMap(xPosition, yPosition);
-		       });
-				 
-				
-				
-			})
-			.fail(function() {
-				alert("요청 실패");
-			})
-	
+                $('#placesList').append(el);
+            })
+
+                $('#placesList').find('li').click(function(){
+                    var xPosition = $(this).find('.x').val();
+                    var yPosition = $(this).find('.y').val();
+                    drawMap(xPosition, yPosition);
+                });
+         })
+         .fail(function() {
+             alert("요청 실패");
+         })	
 }
 
 $(document).ready(function() {
-	
-	$(".search").on("click", function() {
 
-		serachList();
+    //검색 버튼 눌러렀을때
+    $(".search").on("click", function() {
+        serachList();
     });	
 });
 </script>
 <body>
 
-<div class="map_wrap">
-<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-	
+    <div class="map_wrap">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
     <div id="menu_wrap" class="bg_white">
-		<div class="option">
-			<lable>${username}</lable>
-		    <input type="text" value="" id="keyword" size="15">
-			<button class="search" type="submit">검색하기</button>
-		</div>
-		<hr>
+        <div class="option">
+            <lable>${username}</lable>
+            <input type="text" value="" id="keyword" size="15">
+            <button class="search" type="submit">검색하기</button>
+        </div>
+        <hr>
         <ul id="placesList">
-        	<table id="serchList">
- 			</table>
         </ul>
         <div id="pagination"></div>
-	</div>
+    </div>
 
 
 </div>
 
 <script type="text/javascript"	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>
 <script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-	//기본 위치에대한 설정
-	mapOption = {
-		center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-		level : 3
-	// 지도의 확대 레벨
-	};
-	
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    //기본 위치에대한 설정
+    mapOption = {
+        center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level : 3 // 지도의 확대 레벨
+        };
+    
+    // 지도를 생성합니다    
+    var map = new kakao.maps.Map(mapContainer, mapOption);
 
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption);
-	
-	
-	function drawMap (xPosition , yPosition){
-		
-		mapOption = {
-				center : new kakao.maps.LatLng(yPosition, xPosition), // 지도의 중심좌표
-				level : 3
-				// 지도의 확대 레벨
-			};
+    function drawMap (xPosition , yPosition){
 
-		var map = new kakao.maps.Map(mapContainer, mapOption);
+        mapOption = {
+            center : new kakao.maps.LatLng(yPosition, xPosition), // 지도의 중심좌표
+            level : 3// 지도의 확대 레벨
+    };
 
-		// 마커가 표시될 위치입니다 
-		var markerPosition  = new kakao.maps.LatLng(yPosition, xPosition);
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    var markerPosition  = new kakao.maps.LatLng(yPosition, xPosition);// 마커가 표시될 위치입니다
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+}
 
-		// 마커를 생성합니다
-		var marker = new kakao.maps.Marker({
-		    position: markerPosition
-		});
-
-		// 마커가 지도 위에 표시되도록 설정합니다
-		marker.setMap(map);
-
-	}
-	
 </script>
 
 </body>
