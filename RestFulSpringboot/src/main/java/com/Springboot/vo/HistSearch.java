@@ -27,10 +27,9 @@ public class HistSearch {
     private String keyword;
 
     @Column(name = "search_Time") 
-    private String search_Time;
+    private Timestamp search_Time;
     
-    @Transient
-    private int searchCount; //추후에 검색어별 건수 체크를위해
+
     public String getUsername() {
         return username;
     }
@@ -39,10 +38,6 @@ public class HistSearch {
         return keyword;
     }
     
-    public int getSearchCount() {
-        return searchCount;
-    }
-
 
     public interface HistSearchRepository extends JpaRepository<HistSearch, Long> {
     }

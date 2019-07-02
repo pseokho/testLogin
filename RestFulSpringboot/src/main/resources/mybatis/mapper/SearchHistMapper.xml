@@ -21,13 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             username,keyword, search_Time
         )
         values(
-            #{username},#{keyword}, #{search_Time} 
+            #{username},#{keyword}, CURRENT_TIMESTAMP() 
         )
         
     </insert>
 	
     <select id="userSearchHist" parameterType="String" resultType="Map">
-        SELECT keyword , search_Time
+        SELECT id, keyword , search_Time
         FROM hist_search
         WHERE username = #{username}
         order by search_Time desc 

@@ -64,17 +64,20 @@ function serachList()	{
             var item = "";
             var pasobj=JSON.parse(result); 
             $("#placesList").empty();
-
-            console.log(pasobj.documents);
              var el ;
+
              $.each(pasobj.documents, function(key,value) {
                 if(key ==1){
-                    drawMap(value.x, value.y);
+                    drawMap(value.x, value.y); //검색 로딩후 첫번째 값에 지도좌표로 지도 다시그리기
                  }
+
+                var directUrl =    "https://map.kakao.com/link/map/" + value.y+"," + value.x;
                 el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
                 itemStr += ' <span>' + value.road_address_name + '</span>' + ' <span class="jibun gray">' +  value.address_name  + '</span>';
                 itemStr += ' <span>' + value.address_name  + '</span>';
-                itemStr += ' <span class="tel">' + value.phone  + '</span>' + '</div>';
+                itemStr += ' <span class="tel">' + value.phone  + '</span>'
+                itemStr += ' <a href =' + directUrl +' target="_blank" >지도 바로가기</a> ' + '</div>' + '</div>';
+                
                 itemStr += "<input type='hidden' class='x' id = 'x' value ='"+value.x+"' >";
                 itemStr += "<input type='hidden' class='y' id = 'y' value ='"+value.y+"' >";
 
@@ -216,8 +219,6 @@ $(document).ready(function() {
         <div id="pagination"></div>
         </div>
     </div>
-<!--display:inline  :  기본값으로, 요소를 inline 요서처럼 표기 : 앞뒤로 줄바꿈 되지 않음.
-    float:left : 왼쪽부터 배치 -->
     <div id ="serarchHist" style="display:inline;float:left;width:300px">
          <div id="hist_wrap">
             <div class="option">
