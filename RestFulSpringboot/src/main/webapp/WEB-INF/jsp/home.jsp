@@ -118,7 +118,6 @@ function userSearchHistList()   {
         item += "<td> 검색어 </td>";
         item += "<td> 검색일시 </td>";
         item += "</tr>";
-        console.log(pasobj );
         $.each(pasobj.data, function(key,value) {
             item += "<tr>";
             item += "<td> ";
@@ -142,6 +141,7 @@ function userSearchHistList()   {
      }) 
 }
 function popularSearchesList()   {
+     
     $.ajax({   
         url: "/popularSearchesHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
         method: "GET",  // HTTP 요청 방식(GET, POST)
@@ -155,7 +155,6 @@ function popularSearchesList()   {
         var item = "";
         var pasobj=JSON.parse(result); 
 
-        console.log(pasobj.data);
 
         item += "<label> 인기 키워드 목록 </label>"
         item += "<table border ='1px'>";
@@ -163,7 +162,6 @@ function popularSearchesList()   {
         item += "<td> 검색어 </td>";
         item += "<td> 횟수 </td>";
         item += "</tr>";
-        console.log(pasobj );
         $.each(pasobj.data, function(key,value) {
             item += "<tr>";
             item += "<td> ";
@@ -187,6 +185,7 @@ function popularSearchesList()   {
      }) 
 }
 $(document).ready(function() {
+
 
     //검색 버튼 눌러렀을때
     $(".search").on("click", function() {

@@ -34,19 +34,10 @@ public class MainContoller {
     @Autowired
     RestfulService restfulController;
     
-    
-    @RequestMapping(value="logout")
-    public void logout(HttpSession httpSession)
-    {
-        httpSession.invalidate();
-    }
     @RequestMapping(value = "/popularSearchesHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String popularSearchesHist(){
-        
         JSONObject json = new JSONObject();
-        
         json.put("data", searchController.popularSearches());
-        
         return json.toString();
     }
     @RequestMapping(value = "/userSearchHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
@@ -54,14 +45,9 @@ public class MainContoller {
         
         String username = auth.getName();
         JSONObject json = new JSONObject();
-        
         json.put("data", searchController.userSearchHist(username));
-        
         return json.toString();
     }
-
-    
-    
     @RequestMapping(value = "/serach", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String serach(@RequestParam Map<String, Object> param, Authentication auth)
             throws ParseException, JsonProcessingException, org.apache.tomcat.util.json.ParseException {
@@ -71,11 +57,6 @@ public class MainContoller {
         String keyword = param.get("keyword").toString();
         //검색 기록을 남긴다.
         searchController.insertSearchHist(username, keyword);
-        //인기목록 검색해온다
-       // List<HistSearch> popularSearch  = searchController.popularSearches();
-        //개인검색목록을 검색해온다
-        //List<HistSearch> userSearchHist = searchController.userSearchHist(username);
-
         return json.toString();
     }
 
