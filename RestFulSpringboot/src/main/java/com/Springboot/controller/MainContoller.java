@@ -1,8 +1,9 @@
 package com.Springboot.controller;
 
 import java.text.ParseException;
-import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,14 @@ public class MainContoller {
     // restFul연동 Controller
     @Autowired
     RestfulService restfulController;
-
-    @RequestMapping(value = "/home/popularSearchesHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+    
+    
+    @RequestMapping(value="logout")
+    public void logout(HttpSession httpSession)
+    {
+        httpSession.invalidate();
+    }
+    @RequestMapping(value = "/popularSearchesHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String popularSearchesHist(){
         
         JSONObject json = new JSONObject();
@@ -42,7 +49,7 @@ public class MainContoller {
         
         return json.toString();
     }
-    @RequestMapping(value = "/home/userSearchHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+    @RequestMapping(value = "/userSearchHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String userSearchHist(Authentication auth){
         
         String username = auth.getName();
@@ -55,7 +62,7 @@ public class MainContoller {
 
     
     
-    @RequestMapping(value = "/home/serach", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+    @RequestMapping(value = "/serach", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String serach(@RequestParam Map<String, Object> param, Authentication auth)
             throws ParseException, JsonProcessingException, org.apache.tomcat.util.json.ParseException {
 
@@ -72,7 +79,7 @@ public class MainContoller {
         return json.toString();
     }
 
-    @RequestMapping(value = "/home")
+    @RequestMapping(value = "/")
     public ModelAndView loginPage(Authentication auth) {
         ModelAndView model = new ModelAndView();
 

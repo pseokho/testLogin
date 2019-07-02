@@ -53,7 +53,7 @@ var listSize = 10;
 var pageNum  = 1;
 function serachList()	{
     $.ajax({	
-            url: "home/serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+            url: "/serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
             data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
             method: "GET",  // HTTP 요청 방식(GET, POST)
             //async: true,	//동기/비동기 방식 기본값 true
@@ -101,7 +101,7 @@ function serachList()	{
 
 function userSearchHistList()   {
     $.ajax({   
-        url: "home/userSearchHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        url: "/userSearchHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
         method: "GET",  // HTTP 요청 방식(GET, POST)
         //async: true,  //동기/비동기 방식 기본값 true
         //dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
@@ -143,7 +143,7 @@ function userSearchHistList()   {
 }
 function popularSearchesList()   {
     $.ajax({   
-        url: "home/popularSearchesHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        url: "/popularSearchesHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
         method: "GET",  // HTTP 요청 방식(GET, POST)
         //async: true,  //동기/비동기 방식 기본값 true
         //dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
