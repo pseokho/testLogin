@@ -1,6 +1,7 @@
 package com.Springboot.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.Springboot.vo.HistSearch;
 
@@ -24,6 +25,6 @@ public interface SearchHistMapper {
      * @param username 
      * @return 유져에 최근검색목록 리턴
      */
-    public List<HistSearch> userSearchHist(String username);
+    public List<Map<String,Object>> userSearchHist(String username);
 
 }

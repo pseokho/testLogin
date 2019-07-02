@@ -1,6 +1,7 @@
 package com.Springboot.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.Springboot.vo.HistSearch;
 
@@ -22,5 +23,5 @@ public interface SearchHistSerivce {
 	 * 유저에 마지막 검색어 목록
 	 * @return 내 검색 히스토리 리턴
 	 */
-    public List<HistSearch> userSearchHist(String username);
+    public List<Map<String,Object>>userSearchHist(String username);
 }

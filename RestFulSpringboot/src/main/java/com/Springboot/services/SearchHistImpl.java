@@ -1,6 +1,7 @@
 package com.Springboot.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,18 +24,12 @@ public class SearchHistImpl implements SearchHistSerivce{
     @Override
     public List<HistSearch> popularSearches() {
         List<HistSearch>  rtnPopluarSearches= searchHistMapper.popularSearches();
-        for(int i =0 ; i<rtnPopluarSearches.size() ;i++) {
-            System.out.println("키워드"+rtnPopluarSearches.get(i).getKeyword());
-            System.out.println("총 검색횧수 :" + rtnPopluarSearches.get(i).getSearchCount());
-        }
+
         return rtnPopluarSearches;
     }
 
-    @Override
-    public List<HistSearch> userSearchHist(String username) {
-        // TODO Auto-generated method stub
-        List<HistSearch>  aa= searchHistMapper.userSearchHist(username);
-        return aa;
+    public List<Map<String,Object>> userSearchHist(String username){
+        return searchHistMapper.userSearchHist(username);
     }
 
 }

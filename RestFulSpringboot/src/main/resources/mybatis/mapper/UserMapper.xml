@@ -5,13 +5,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.Springboot.mapper.UserMapper">
 
-<!-- 
-	<select id="readTotalUserInfo"
-		resultType="com.Springboot.vo.User">
-		SELECT username,password,role
-		FROM USERS
-	</select>
- -->
 	<select id="readUserInfo" resultType="com.Springboot.vo.User">
 		SELECT * FROM users WHERE username = #{username}
 	</select>

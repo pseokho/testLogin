@@ -48,14 +48,12 @@
 <title>Login Demo - Kakao JavaScript SDK</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
-	
 <script type="text/javascript">
 var listSize = 10;
 var pageNum  = 1;
 function serachList()	{
-
     $.ajax({	
-            url: "serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+            url: "home/serach",	 // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
             data: {keyword : $('#keyword').val() , listSize : listSize , pageNum: pageNum}, // HTTP 요청과 함께 서버로 보낼 데이터
             method: "GET",  // HTTP 요청 방식(GET, POST)
             //async: true,	//동기/비동기 방식 기본값 true
@@ -67,8 +65,6 @@ function serachList()	{
             var pasobj=JSON.parse(result); 
             $("#placesList").empty();
 
-            var totalCount = pasobj.meta.total_count;
-            var maxPage = ((totalCount-1)/listSize)+1;
              var el ;
              $.each(pasobj.documents, function(key,value) {					 				
                 el= document.createElement('li'), itemStr = '<span class="markerbg marker_' + (key+1) + '"></span>' + '<div class="info">' +  ' <h5>' + value.place_name + '</h5>';
@@ -96,33 +92,90 @@ function serachList()	{
          })	
 }
 
+function userSearchHistList()   {
+    $.ajax({   
+        url: "home/userSearchHist",   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        method: "GET",  // HTTP 요청 방식(GET, POST)
+        //async: true,  //동기/비동기 방식 기본값 true
+        //dataType: "json"                                   // 서버에서 보내줄 데이터의 타입
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+      })
+    .done(function(result) {
+        $("#searchHistList").empty();
+
+        var item = "";
+        var pasobj=JSON.parse(result); 
+
+        console.log(pasobj );
+        $.each(pasobj.data, function(key,value) {
+
+            
+            /* el= document.createElement('li'), itemStr =+  ' <h5> 검색어  : ' + value.KEYWORD ;
+            itemStr += ' 검색일시 :' + value.SEARCH_TIME+"</h5>" ;
+
+            el.innerHTML = itemStr;
+            el.className = 'item';
+            item+=el;
+         
+
+            $('#searchHistList').append(el); 
+             */
+        })
+
+     })
+     .fail(function() {
+         alert("요청 실패");
+     }) 
+}
 $(document).ready(function() {
 
     //검색 버튼 눌러렀을때
     $(".search").on("click", function() {
         serachList();
     });	
+    //내검색목록 눌러렀을때
+    $(".userSearchHist").on("click", function() {
+        userSearchHistList();
+    }); 
+    //인기 검색어 목록 눌러렀을때
+    $(".popularSearches").on("click", function() {
+        popularSearchesList();
+    }); 
 });
 </script>
 <body>
+<div style='display:inline;min-width:1400px;'>
+    <div class="map_wrap" style='display:inline;float:left;width:1000px'>
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
-    <div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <lable>${username}</lable>
-            <input type="text" value="" id="keyword" size="15">
-            <button class="search" type="submit">검색하기</button>
-        </div>
+        <div id="menu_wrap" class="bg_white">
+            <div class="option">
+                <lable>${username}</lable>
+                <input type="text" value="" id="keyword" size="15">
+                <button class="search" type="submit">검색하기</button>
+            </div>
         <hr>
         <ul id="placesList">
-        </ul>
+         </ul>
         <div id="pagination"></div>
+        </div>
+    </div>
+<!--display:inline  :  기본값으로, 요소를 inline 요서처럼 표기 : 앞뒤로 줄바꿈 되지 않음.
+    float:left : 왼쪽부터 배치 -->
+    <div id ="serarchHist" style="display:inline;float:left;width:400px">
+         <div id="hist_wrap">
+            <div class="option">
+                <button class="userSearchHist" type="submit" style="display:inline;width: 75px;">내 검색 목록</button>
+                <button class="popularSearches" type="submit" style="display:inline;width: 100px;">인기 키워드 목록</button>
+            </div>
+        <hr>
+        <ul id="searchHistList">
+        </ul>
+        </div>
     </div>
 
 
-</div>
+
 
 <script type="text/javascript"	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a3e264ee681f0ca6bb7c3327986b38cd&libraries=services"></script>
 <script>
@@ -131,7 +184,7 @@ $(document).ready(function() {
     mapOption = {
         center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
         level : 3 // 지도의 확대 레벨
-        };
+    };
     
     // 지도를 생성합니다    
     var map = new kakao.maps.Map(mapContainer, mapOption);

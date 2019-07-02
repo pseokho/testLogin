@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.Springboot.rest.servcie.RestfulService;
 import com.Springboot.services.SearchHistSerivce;
-import com.Springboot.vo.HistSearch;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
@@ -41,21 +39,33 @@ public class MainContoller {
         return "";
 
     }
+    
+    @RequestMapping(value = "/home/userSearchHist", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+    public @ResponseBody String userSearchHist(Authentication auth){
+        
+        String username = auth.getName();
+        JSONObject json = new JSONObject();
+        
+        json.put("data", searchController.userSearchHist(username));
+        
+        return json.toString();
+    }
 
-    @RequestMapping(value = "/serach", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+    
+    
+    @RequestMapping(value = "/home/serach", produces = "application/text; charset=utf8", method = RequestMethod.GET)
     public @ResponseBody String serach(@RequestParam Map<String, Object> param, Authentication auth)
             throws ParseException, JsonProcessingException, org.apache.tomcat.util.json.ParseException {
 
         JSONObject json = new JSONObject(restfulController.restfulApiKkakao(param));
-        JSONArray jsonArray = new JSONArray(json.get("documents").toString());
         String username = auth.getName();
         String keyword = param.get("keyword").toString();
         //검색 기록을 남긴다.
         searchController.insertSearchHist(username, keyword);
         //인기목록 검색해온다
-        List<HistSearch> popularSearch  = searchController.popularSearches();
+       // List<HistSearch> popularSearch  = searchController.popularSearches();
         //개인검색목록을 검색해온다
-        List<HistSearch> userSearchHist = searchController.userSearchHist(username);
+        //List<HistSearch> userSearchHist = searchController.userSearchHist(username);
 
         return json.toString();
     }
